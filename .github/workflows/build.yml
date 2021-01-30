@@ -32,20 +32,20 @@ jobs:
     
     - name: Restore NuGet pckages
       run: nuget restore ${{ env.AZURE_WEBAPP_NAME }}
+ 
+    - name: Build
+      run: msbuild ${{ env.AZURE_WEBAPP_NAME }} /p:Configuration=Release
       
     - name: Run MSTest Unit Tests
       uses: zyborg/dotnet-tests-report@v1
       with:
-        project_path: PetUniverse/LogicLayerTests
+        project_path: ${{ env.AZURE_WEBAPP_NAME }}
         report_name: pet_universe_tests
         report_title: PetUniverse Tests
         github_token: ${{ secrets.GITHUB_TOKEN }}
         gist_name: ReadMe.md
         gist_badge_label: 'PetUniverse Tests: %Counters_passed%/%Counters_total%'
         gist_token: ${{ secrets.GIST_TOKEN }}
-      
-    - name: Build
-      run: msbuild ${{ env.AZURE_WEBAPP_NAME }} /p:Configuration=Release
       
 #     - name: Publish artifacts
 #       uses: actions/upload-artifact@v1.0.0
