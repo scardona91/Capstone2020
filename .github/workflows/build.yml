@@ -35,6 +35,14 @@ jobs:
       
     - name: Run MSTest Unit Tests
       uses: zyborg/dotnet-tests-report@v1
+      with:
+        project_path: ${{ env.AZURE_WEBAPP_NAME }}
+        report_name: pet_universe_tests
+        report_title: PetUniverse Tests
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        gist_name: ReadMe.md
+        gist_badge_label: 'PetUniverse Tests: %Counters_passed%/%Counters_total%'
+        gist_token: ${{ secrets.GIST_TOKEN }}
       
     - name: Build
       run: msbuild ${{ env.AZURE_WEBAPP_NAME }} /p:Configuration=Release
@@ -43,4 +51,4 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        path: bin\Production\${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
