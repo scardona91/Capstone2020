@@ -24,19 +24,18 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
         
       - name: Setup MSBuild Path
         uses: warrenbuckley/Setup-MSBuild@v1
         
       - name: Setup NuGet.exe for use with actions
         uses: NuGet/setup-nuget@v1.0.5
+      
+      - name: Restore Nuget Packages
+        run: nuget restore PetUniverse.sln
 
       - name: Build App
-        run: msbuild PetUniverse.sln /p:Configuration=Production /p:DeployOnBuild=false
+        run: msbuild PetUniverse.sln /p:Configuration=Production /p:DeployOnBuild=false /p:PublishProfile=FolderProfile
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.2
