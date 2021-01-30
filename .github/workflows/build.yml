@@ -32,13 +32,13 @@ jobs:
     
     - name: Restore NuGet pckages
       run: nuget restore ${{ env.AZURE_WEBAPP_NAME }}
-
+      
+    - name: Run MSTest Unit Tests
+      uses: zyborg/dotnet-tests-report@v1
+      
     - name: Build
       run: msbuild ${{ env.AZURE_WEBAPP_NAME }} /p:Configuration=Release
-
-    - name: Publish to folder
-      run: msbuild ${{ env.AZURE_WEBAPP_NAME }} /p:Configuration=Production /p:DeployOnBuild=false /t:WebPublish /p:WebPublishMethod=FileSystem /p:publishUrl=${{ env.AZURE_WEBAPP_PACKAGE_PATH }} /p:PackageAsSingleFile=false
-
+      
     - name: Publish artifacts
       uses: actions/upload-artifact@v1.0.0
       with:
