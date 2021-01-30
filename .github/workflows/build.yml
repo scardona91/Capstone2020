@@ -29,8 +29,8 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
         
-      - name: setup-msbuild
-        uses: microsoft/setup-msbuild@v1
+      - name: Setup MSBuild Path
+        uses: warrenbuckley/Setup-MSBuild@v1
         
       - name: Setup NuGet.exe for use with actions
         uses: NuGet/setup-nuget@v1.0.5
